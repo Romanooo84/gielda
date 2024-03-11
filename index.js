@@ -1,21 +1,17 @@
-const apiKey =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlN2M5MzBkOWVlMjFkYTk0ZjhmYzMyNTdkMzg3ZWNlZCIsInN1YiI6IjY1ZTlhZDJhNmEyMjI3MDE4Njk2NTExNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j1C6buHnPvlB2eInbvledvTmiFFIKSym7oMjouLo9AE';
 
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${apiKey}`,
-  },
-};
+dana = document.querySelector('.dane')
 
-export const fetchPopularMovies = () =>
-  fetch(`https://api.polygon.io/v2/aggs/ticker/O:TSLA230113C00015000/range/1/day/2023-01-01/2023-01-11?apiKey=YPYGsi2Npvnieiy03z8hwPaA7U5rMtDt`)
-        .then(response => response.json())
-        .then(data => console.log(data))
-    .catch(err => console.error(err));
-
-export const fetchMoviesByID = id =>
-  fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
+const fetchStockData = () =>
+  console.log('start2')
+  fetch(`https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2023-01-09/2023-01-09?adjusted=true&sort=asc&limit=120&apiKey=YPYGsi2Npvnieiy03z8hwPaA7U5rMtDt`)
     .then(response => response.json())
-    .catch(err => console.error(err));
+    .then(data => {
+        dana.textContent=data.results[0].v
+        console.log(data);
+        console.log('cokolwiek')
+      return data; // Dodane zwracanie obietnicy z przetworzonymi danymi
+    })
+    .catch(err => {
+      console.error(err);
+      throw err; // Rzucenie błędu, aby można było go obsłużyć gdzie indziej, jeśli trzeba
+    });
